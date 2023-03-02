@@ -1,8 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package menus;
+
+import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -14,18 +15,20 @@ public class GameScreen extends javax.swing.JFrame {
      * Creates new form GameScreen
      */
     public GameScreen() {
+        gridLayout();
         initComponents();
         setFrame();
+
     }
 
     private void setFrame() {
         this.setTitle("Tetris");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setSize(670, 475);
+        this.setSize(480, 560);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        this.setResizable(false);
     }
-        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,16 +40,18 @@ public class GameScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(670, 800));
+        setSize(new java.awt.Dimension(670, 800));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+            .addGap(0, 486, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 523, Short.MAX_VALUE)
+            .addGap(0, 560, Short.MAX_VALUE)
         );
 
         pack();
@@ -85,8 +90,19 @@ public class GameScreen extends javax.swing.JFrame {
                 new GameScreen().setVisible(true);
             }
         });
+
     }
 
+    private void gridLayout() {
+        JButton b1 = new JButton("test");
+        
+        this.add(b1);
+        
+//        JLabel l1 = new JLabel();
+//        l1.setBackground(Color.black);
+    }
+
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-}
+

@@ -6,6 +6,7 @@ package menus;
 
 import java.awt.Toolkit;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import tools.Board;
 
 /**
  *
@@ -104,7 +105,8 @@ public class StartMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPlayActionPerformed
-        GameScreen scrn = new GameScreen();
+        //GameScreen scrn = new GameScreen();
+        Board board = new Board();
         this.dispose();
     }//GEN-LAST:event_buttonPlayActionPerformed
 
