@@ -106,27 +106,35 @@ public class GameScreen extends javax.swing.JFrame {
     private void gridLayout() {
         //makes an amount of labels
         int columns = (WIDTH / BLOCK_SIZE);
-        int rows = (LENGTH/ BLOCK_SIZE);
-        JLabel[][] labels = new JLabel[columns][rows];
+        int rows = (LENGTH / BLOCK_SIZE);
+        int total = (LENGTH / BLOCK_SIZE) * (WIDTH / BLOCK_SIZE);
+        JLabel[] labels = new JLabel[total];
         Numbers numbers = new Numbers();
         //adds labels to frame and gives it a random colour
         int x = 0;
         int y = 1;
         int rowNum = 0;
+        int columnNum = 0;
         for (int i = 0; i < labels.length; i++) {
-            labels[i][rowNum] = new JLabel();
-            labels[i][rowNum].setOpaque(true);
+            labels[i] = new JLabel();
+            labels[i].setOpaque(true);
             // set colors for test
-            labels[i][rowNum].setBackground(new Color(numbers.random(1, 254), numbers.random(1, 254), numbers.random(1, 254)));
-            labels[i][rowNum].setSize(BLOCK_SIZE, BLOCK_SIZE);
-            this.add(labels[i][rowNum]);
+            labels[i].setBackground(new Color(numbers.random(1, 254), numbers.random(1, 254), numbers.random(1, 254)));
+            labels[i].setSize(BLOCK_SIZE, BLOCK_SIZE);
+            this.add(labels[i]);
             // positions
-            if (x > WIDTH) {
+            if(y >= LENGTH){
+            
+            }
+            else if (x >= WIDTH) {
                 x = 0;
                 y += 20;
                 rowNum++;
+
             }
-            labels[i][rowNum].setLocation(x, y);
+            int location[][] = null;
+            location[0][0] = 0;
+            labels[i].setLocation(x, y);
             x += 20;
 
         }
