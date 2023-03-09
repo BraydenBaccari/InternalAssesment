@@ -1,15 +1,10 @@
 package menus;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.HashSet;
 import java.util.Set;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import tools.Numbers;
+import tools.Location;
 
 /**
  *
@@ -17,9 +12,13 @@ import tools.Numbers;
  */
 public class GameScreen extends javax.swing.JFrame {
 
-    final int WIDTH = 600;
-    final int LENGTH = 800;
-    final int BLOCK_SIZE = 20;
+    public final int WIDTH = 596;
+    public final int LENGTH = 800;
+    public final int BLOCK_SIZE = 20;
+    public final int COLUMNS = (WIDTH / BLOCK_SIZE);
+    public final int ROWS = (LENGTH / BLOCK_SIZE);
+    public final int TOTAL = (LENGTH / BLOCK_SIZE) * (WIDTH / BLOCK_SIZE);
+    public JLabel[] labels = new JLabel[TOTAL];
 
     /**
      * Creates new form GameScreen
@@ -50,7 +49,6 @@ public class GameScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(670, 800));
         setSize(new java.awt.Dimension(670, 800));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,46 +103,35 @@ public class GameScreen extends javax.swing.JFrame {
 
     private void gridLayout() {
         //makes an amount of labels
-        int columns = (WIDTH / BLOCK_SIZE);
-        int rows = (LENGTH / BLOCK_SIZE);
-        int total = (LENGTH / BLOCK_SIZE) * (WIDTH / BLOCK_SIZE);
-        JLabel[] labels = new JLabel[total];
-        Numbers numbers = new Numbers();
         //adds labels to frame and gives it a random colour
         int x = 0;
         int y = 1;
-        int rowNum = 0;
-        int columnNum = 0;
         for (int i = 0; i < labels.length; i++) {
             labels[i] = new JLabel();
             labels[i].setOpaque(true);
-            // set colors for test
-            labels[i].setBackground(new Color(numbers.random(1, 254), numbers.random(1, 254), numbers.random(1, 254)));
             labels[i].setSize(BLOCK_SIZE, BLOCK_SIZE);
             this.add(labels[i]);
-            // positions
-            if(y >= LENGTH){
-            
-            }
-            else if (x >= WIDTH) {
+            // makes the laebels fit in a grid on the frame
+            if (y >= LENGTH) {
+
+            } else if (x >= WIDTH) {
                 x = 0;
                 y += 20;
-                rowNum++;
-
             }
-            int location[][] = null;
-            location[0][0] = 0;
+
             labels[i].setLocation(x, y);
             x += 20;
 
         }
-                //setBoard(labels);
+        setBoard();
 
     }
 
-    private void setBoard(JLabel labels[][]) {   
-        //labels[][].setBackground(Color.GRAY);
-        
+    private void setBoard() {
+        Location location = new Location();
+        int x = 0;
+        int y = 0;
+        labels[location.getLabelNum(1,0)].setBackground(Color.GRAY);
     }
 }
 
