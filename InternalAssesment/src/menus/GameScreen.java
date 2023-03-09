@@ -1,8 +1,12 @@
 package menus;
 
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Set;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.border.Border;
 import tools.Numbers;
 import tools.Location;
 
@@ -15,10 +19,11 @@ public class GameScreen extends javax.swing.JFrame {
     public final int WIDTH = 596;
     public final int LENGTH = 800;
     public final int BLOCK_SIZE = 20;
-    public final int COLUMNS = (WIDTH / BLOCK_SIZE);
-    public final int ROWS = (LENGTH / BLOCK_SIZE);
+    public final int COLUMNS = (WIDTH / BLOCK_SIZE) - 1;
+    public final int ROWS = (LENGTH / BLOCK_SIZE) - 2;
     public final int TOTAL = (LENGTH / BLOCK_SIZE) * (WIDTH / BLOCK_SIZE);
     public JLabel[] labels = new JLabel[TOTAL];
+    public Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
     /**
      * Creates new form GameScreen
@@ -27,6 +32,8 @@ public class GameScreen extends javax.swing.JFrame {
         initComponents();
         setFrame();
         gridLayout();
+        test();
+
     }
 
     private void setFrame() {
@@ -36,7 +43,6 @@ public class GameScreen extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
-
     }
 
     /**
@@ -49,6 +55,8 @@ public class GameScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
+        setForeground(new java.awt.Color(0, 0, 0));
         setSize(new java.awt.Dimension(670, 800));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,9 +137,37 @@ public class GameScreen extends javax.swing.JFrame {
 
     private void setBoard() {
         Location location = new Location();
-        int x = 0;
-        int y = 0;
-        labels[location.getLabelNum(1,0)].setBackground(Color.GRAY);
+        for (int i = 0; i < ROWS; i++) {
+            labels[location.getLabelNum(9, i)].setBackground(Color.blue);
+            labels[location.getLabelNum(9, i)].setBorder(border);
+            labels[location.getLabelNum(19, i)].setBackground(Color.blue);
+            labels[location.getLabelNum(19, i)].setBorder(border);
+        }
+        for (int i = 10; i < 19; i++) {
+            labels[location.getLabelNum(i, 37)].setBackground(Color.blue);
+            labels[location.getLabelNum(i, 37)].setBorder(border);
+        }
+    }
+
+    /**
+     * method to test out features
+     */
+    private void test() {
+        System.out.println(ROWS);
+        System.out.println(COLUMNS);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_UP) {
+            System.out.println("Up Arrrow-Key is pressed!");
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            System.out.println("Down Arrrow-Key is pressed!");
+        } else if (keyCode == KeyEvent.VK_LEFT) {
+            System.out.println("Left Arrrow-Key is pressed!");
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            System.out.println("Right Arrrow-Key is pressed!");
+        }
     }
 }
 
