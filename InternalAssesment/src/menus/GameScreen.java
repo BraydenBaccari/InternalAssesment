@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.border.Border;
 import tools.Numbers;
 import tools.Location;
+import tools.Constants;
 
 /**
  *
@@ -16,14 +17,10 @@ import tools.Location;
  */
 public class GameScreen extends javax.swing.JFrame {
 
-    public final int WIDTH = 596;
-    public final int LENGTH = 800;
-    public final int BLOCK_SIZE = 20;
-    public final int COLUMNS = (WIDTH / BLOCK_SIZE) - 1;
-    public final int ROWS = (LENGTH / BLOCK_SIZE) - 2;
-    public final int TOTAL = (LENGTH / BLOCK_SIZE) * (WIDTH / BLOCK_SIZE);
-    public JLabel[] labels = new JLabel[TOTAL];
+    Constants con = new Constants();
+    public JLabel[] labels = new JLabel[con.TOTAL];
     public Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+    Location location = new Location();
 
     /**
      * Creates new form GameScreen
@@ -31,15 +28,15 @@ public class GameScreen extends javax.swing.JFrame {
     public GameScreen() {
         initComponents();
         setFrame();
-        gridLayout();
         test();
+        gridLayout();
 
     }
 
     private void setFrame() {
         this.setTitle("Tetris");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setSize(WIDTH, LENGTH);
+        this.setSize(con.WIDTH, con.LENGTH);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
@@ -58,6 +55,11 @@ public class GameScreen extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0));
         setForeground(new java.awt.Color(0, 0, 0));
         setSize(new java.awt.Dimension(670, 800));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,6 +74,10 @@ public class GameScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        keyPressed(evt);
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -111,41 +117,35 @@ public class GameScreen extends javax.swing.JFrame {
 
     private void gridLayout() {
         //makes an amount of labels
-        //adds labels to frame and gives it a random colour
         int x = 0;
         int y = 1;
         for (int i = 0; i < labels.length; i++) {
             labels[i] = new JLabel();
             labels[i].setOpaque(true);
-            labels[i].setSize(BLOCK_SIZE, BLOCK_SIZE);
+            labels[i].setSize(con.BLOCK_SIZE, con.BLOCK_SIZE);
             this.add(labels[i]);
             // makes the laebels fit in a grid on the frame
-            if (y >= LENGTH) {
-
-            } else if (x >= WIDTH) {
+            if (x >= con.WIDTH) {
                 x = 0;
                 y += 20;
             }
-
             labels[i].setLocation(x, y);
             x += 20;
-
         }
         setBoard();
 
     }
 
     private void setBoard() {
-        Location location = new Location();
-        for (int i = 0; i < ROWS; i++) {
+        for (int i = 0; i < con.ROWS; i++) {
             labels[location.getLabelNum(9, i)].setBackground(Color.blue);
             labels[location.getLabelNum(9, i)].setBorder(border);
             labels[location.getLabelNum(19, i)].setBackground(Color.blue);
             labels[location.getLabelNum(19, i)].setBorder(border);
         }
         for (int i = 10; i < 19; i++) {
-            labels[location.getLabelNum(i, 37)].setBackground(Color.blue);
-            labels[location.getLabelNum(i, 37)].setBorder(border);
+            labels[location.getLabelNum(i, con.ROWS - 1)].setBackground(Color.blue);
+            labels[location.getLabelNum(i, con.ROWS - 1)].setBorder(border);
         }
     }
 
@@ -153,16 +153,14 @@ public class GameScreen extends javax.swing.JFrame {
      * method to test out features
      */
     private void test() {
-        System.out.println(ROWS);
-        System.out.println(COLUMNS);
+        System.out.println(con.ROWS);
+        System.out.println(con.COLUMNS);
     }
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_UP) {
-            System.out.println("Up Arrrow-Key is pressed!");
-        } else if (keyCode == KeyEvent.VK_DOWN) {
-            System.out.println("Down Arrrow-Key is pressed!");
+        if (keyCode == KeyEvent.VK_DOWN) {
+            
         } else if (keyCode == KeyEvent.VK_LEFT) {
             System.out.println("Left Arrrow-Key is pressed!");
         } else if (keyCode == KeyEvent.VK_RIGHT) {
