@@ -9,20 +9,31 @@ package tools;
  * @author b.baccari
  */
 public class Mover {
+
     Location location = new Location();
+
     public int left(int x, int y) {
-        
-        x--;
-        return location.getLabelNum(x, y);
+        if(x == 0) return location.getLabelNum(x, y);
+        else{
+            x--;
+            return location.getLabelNum(x, y);
+        }
     }
 
     public int right(int x, int y) {
-         x++;
-        return location.getLabelNum(x, y);
-        
+        if(x == 0) return location.getLabelNum(x, y);
+        else{
+            x++;
+            return location.getLabelNum(x, y);
+        }
     }
-    public int down(int x, int y){
-     y++;
-     return location.getLabelNum(x, y);
+
+    public int down(int x, int y) {
+        if (y == 0) return location.getLabelNum(x, y);
+        else {
+            y++;
+            return location.getLabelNum(x, y);
+
+        }
     }
 }

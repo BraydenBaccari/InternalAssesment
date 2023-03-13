@@ -1,13 +1,10 @@
 package menus;
 
 import java.awt.Color;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
-import tools.Numbers;
 import tools.Location;
 import tools.Constants;
 import tools.Mover;
@@ -167,8 +164,10 @@ public class GameScreen extends javax.swing.JFrame {
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if(location.getLabelNum(0, startingY) > location.getLabelNum(0, maxY)){
+        if(location.getLabelNum(startingX, startingY) > location.getLabelNum(0, maxY)){
             startingY = 0;
+            
+            maxY--;
         }
         else if (keyCode == KeyEvent.VK_DOWN) {
             if(location.getLabelNum(startingX, startingY) < location.getLabelNum(startingX,maxY)){
