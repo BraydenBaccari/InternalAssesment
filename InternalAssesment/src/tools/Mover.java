@@ -9,17 +9,20 @@ package tools;
  * @author b.baccari
  */
 public class Mover {
-
-    public int left() {
-
+    Location location = new Location();
+    public int left(int x, int y) {
+        
+        x--;
+        return location.getLabelNum(x, y);
     }
 
-    public int right() {
-
+    public int right(int x, int y) {
+         x++;
+        return location.getLabelNum(x, y);
+        
     }
-
-    public int down() {
-
+    public int down(int x, int y){
+     y++;
+     return location.getLabelNum(x, y);
     }
-
 }

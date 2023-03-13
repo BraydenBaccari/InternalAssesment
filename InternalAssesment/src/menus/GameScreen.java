@@ -10,6 +10,7 @@ import javax.swing.border.Border;
 import tools.Numbers;
 import tools.Location;
 import tools.Constants;
+import tools.Mover;
 
 /**
  *
@@ -19,8 +20,13 @@ public class GameScreen extends javax.swing.JFrame {
 
     Constants con = new Constants();
     public JLabel[] labels = new JLabel[con.TOTAL];
-    public Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+    public Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 2);
+    public Border border2 = BorderFactory.createLineBorder(Color.BLACK, 2);
     Location location = new Location();
+    Mover mover = new Mover();
+    public int startingX = 13;
+    public int startingY = 0;
+    int maxY = con.ROWS - 2;
 
     /**
      * Creates new form GameScreen
@@ -123,6 +129,8 @@ public class GameScreen extends javax.swing.JFrame {
             labels[i] = new JLabel();
             labels[i].setOpaque(true);
             labels[i].setSize(con.BLOCK_SIZE, con.BLOCK_SIZE);
+            labels[i].setBackground(Color.black);
+
             this.add(labels[i]);
             // makes the laebels fit in a grid on the frame
             if (x >= con.WIDTH) {
@@ -159,12 +167,33 @@ public class GameScreen extends javax.swing.JFrame {
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_DOWN) {
-            
+        if(location.getLabelNum(0, startingY) > location.getLabelNum(0, maxY)){
+            startingY = 0;
+        }
+        else if (keyCode == KeyEvent.VK_DOWN) {
+            if(location.getLabelNum(startingX, startingY) < location.getLabelNum(startingX,maxY)){
+            labels[mover.down(startingX,startingY)].setBackground(Color.red);
+            labels[mover.down(startingX,startingY)].setBorder(border);
+            labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
+            labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
+            startingY++;
+            }
         } else if (keyCode == KeyEvent.VK_LEFT) {
-            System.out.println("Left Arrrow-Key is pressed!");
+            if (location.getLabelNum(startingX,startingY) > location.getLabelNum(10, startingY)) {
+                labels[mover.left(startingX,startingY)].setBackground(Color.red);
+                labels[mover.left(startingX,startingY)].setBorder(border);
+                labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
+                labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
+                startingX--;
+            }
         } else if (keyCode == KeyEvent.VK_RIGHT) {
-            System.out.println("Right Arrrow-Key is pressed!");
+            if (location.getLabelNum(startingX, startingY) < location.getLabelNum(18, startingY)) {
+                labels[mover.right(startingX,startingY)].setBackground(Color.red);
+                labels[mover.right(startingX,startingY)].setBorder(border);
+                labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
+                labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
+                startingX++;
+            }
         }
     }
 }
