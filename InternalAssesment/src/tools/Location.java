@@ -33,11 +33,22 @@ public class Location {
 
     }
 
-    /**
-     *
-     * @param labelNum the label number
-     * @return returns the position of the label(int terms of x and y)
-     */
+    public int getNextLabel(int x, int y) {
+        int labelNum = 0;
+        y++;
+        if (y == 0) {
+            return x;
+        } else {
+            labelNum = 30 * y;
+            labelNum += x;
+            return labelNum;
+        }
+    }
+        /**
+         *
+         * @param labelNum the label number
+         * @return returns the position of the label(int terms of x and y)
+         */
     public int[] getCoords(int labelNum) {
         int[] coords = new int[2];
         int x = 0;

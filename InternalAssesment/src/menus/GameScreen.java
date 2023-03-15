@@ -22,7 +22,7 @@ public class GameScreen extends javax.swing.JFrame {
     Location location = new Location();
     Mover mover = new Mover();
     public int startingX = 13;
-    public int startingY = 0;
+    public int startingY = 17;
     int maxY = con.ROWS - 2;
 
     /**
@@ -142,7 +142,7 @@ public class GameScreen extends javax.swing.JFrame {
     }
 
     private void setBoard() {
-        for (int i = 0; i < con.ROWS; i++) {
+        for (int i = 18; i < 38; i++) {
             labels[location.getLabelNum(9, i)].setBackground(Color.blue);
             labels[location.getLabelNum(9, i)].setBorder(border);
             labels[location.getLabelNum(19, i)].setBackground(Color.blue);
@@ -164,36 +164,55 @@ public class GameScreen extends javax.swing.JFrame {
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if(location.getLabelNum(startingX, startingY) > location.getLabelNum(0, maxY)){
-            startingY = 0;
-            
-            maxY--;
-        }
-        else if (keyCode == KeyEvent.VK_DOWN) {
-            if(location.getLabelNum(startingX, startingY) < location.getLabelNum(startingX,maxY)){
-            labels[mover.down(startingX,startingY)].setBackground(Color.red);
-            labels[mover.down(startingX,startingY)].setBorder(border);
-            labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
-            labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
-            startingY++;
-            }
-        } else if (keyCode == KeyEvent.VK_LEFT) {
-            if (location.getLabelNum(startingX,startingY) > location.getLabelNum(10, startingY)) {
-                labels[mover.left(startingX,startingY)].setBackground(Color.red);
-                labels[mover.left(startingX,startingY)].setBorder(border);
+        if (labels[location.getNextLabel(startingX, startingY)].getBackground() != Color.black) {
+            startingY = 17;
+            startingX = 13;
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            if (location.getLabelNum(startingX, startingY) < location.getLabelNum(startingX, maxY)) {
+                labels[mover.down(startingX, startingY)].setBackground(Color.red);
+                labels[mover.down(startingX, startingY)].setBorder(border);
                 labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
                 labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
+                startingY++;
+            }
+        } else if (keyCode == KeyEvent.VK_LEFT) {
+            if (location.getLabelNum(startingX, startingY) > location.getLabelNum(10, startingY)) {
+                labels[mover.left(startingX, startingY)].setBackground(Color.red);
+                labels[mover.left(startingX, startingY)].setBorder(border);
+                clearTile();
                 startingX--;
             }
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             if (location.getLabelNum(startingX, startingY) < location.getLabelNum(18, startingY)) {
-                labels[mover.right(startingX,startingY)].setBackground(Color.red);
-                labels[mover.right(startingX,startingY)].setBorder(border);
-                labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
-                labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
+                labels[mover.right(startingX, startingY)].setBackground(Color.red);
+                labels[mover.right(startingX, startingY)].setBorder(border);
+                clearTile();
                 startingX++;
             }
+
+        } else if (keyCode == KeyEvent.VK_SPACE) {
+            do {
+                labels[mover.down(startingX, startingY)].setBackground(Color.red);
+                labels[mover.down(startingX, startingY)].setBorder(border);
+                clearTile();
+                startingY++;
+            } while (labels[location.getNextLabel(startingX, startingY)].getBackground() == Color.black);
+
         }
+
+    }
+
+    private void piece() {
+
+    }
+
+    private void setTile() {
+
+    }
+
+    private void clearTile() {
+        labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
+        labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
     }
 }
 
