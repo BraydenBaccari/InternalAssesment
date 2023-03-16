@@ -21,9 +21,10 @@ public class GameScreen extends javax.swing.JFrame {
     public Border border2 = BorderFactory.createLineBorder(Color.BLACK, 2);
     Location location = new Location();
     Mover mover = new Mover();
-    public int startingX = 13;
+    public int startingX = 14;
     public int startingY = 17;
     int maxY = con.ROWS - 2;
+    public int x = 9;
 
     /**
      * Creates new form GameScreen
@@ -33,6 +34,7 @@ public class GameScreen extends javax.swing.JFrame {
         setFrame();
         test();
         gridLayout();
+        gravity();
 
     }
 
@@ -164,30 +166,36 @@ public class GameScreen extends javax.swing.JFrame {
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (labels[location.getNextLabel(startingX, startingY)].getBackground() != Color.black) {
+        //checkRow();
+        if (labels[location.getLabelBelow(startingX, startingY)].getBackground() != Color.black) {
             startingY = 17;
-            startingX = 13;
+            startingX = 14;
         } else if (keyCode == KeyEvent.VK_DOWN) {
             if (location.getLabelNum(startingX, startingY) < location.getLabelNum(startingX, maxY)) {
                 labels[mover.down(startingX, startingY)].setBackground(Color.red);
                 labels[mover.down(startingX, startingY)].setBorder(border);
-                labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
-                labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
+                clearTile();
                 startingY++;
             }
         } else if (keyCode == KeyEvent.VK_LEFT) {
             if (location.getLabelNum(startingX, startingY) > location.getLabelNum(10, startingY)) {
-                labels[mover.left(startingX, startingY)].setBackground(Color.red);
-                labels[mover.left(startingX, startingY)].setBorder(border);
-                clearTile();
-                startingX--;
+                if (labels[location.getLabelLeft(startingX, startingY)].getBackground() != Color.black); else {
+                    labels[mover.left(startingX, startingY)].setBackground(Color.red);
+                    labels[mover.left(startingX, startingY)].setBorder(border);
+                    clearTile();
+                    startingX--;
+                }
             }
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             if (location.getLabelNum(startingX, startingY) < location.getLabelNum(18, startingY)) {
-                labels[mover.right(startingX, startingY)].setBackground(Color.red);
-                labels[mover.right(startingX, startingY)].setBorder(border);
-                clearTile();
-                startingX++;
+                if (labels[location.getLabelRight(startingX, startingY)].getBackground() != Color.black); else {
+                    labels[mover.right(startingX, startingY)].setBackground(Color.red);
+
+                    labels[mover.right(startingX, startingY)].setBorder(border);
+                    clearTile();
+
+                    startingX++;
+                }
             }
 
         } else if (keyCode == KeyEvent.VK_SPACE) {
@@ -196,9 +204,10 @@ public class GameScreen extends javax.swing.JFrame {
                 labels[mover.down(startingX, startingY)].setBorder(border);
                 clearTile();
                 startingY++;
-            } while (labels[location.getNextLabel(startingX, startingY)].getBackground() == Color.black);
+            } while (labels[location.getLabelBelow(startingX, startingY)].getBackground() == Color.black);
 
         }
+        
 
     }
 
@@ -213,6 +222,17 @@ public class GameScreen extends javax.swing.JFrame {
     private void clearTile() {
         labels[location.getLabelNum(startingX, startingY)].setBackground(Color.black);
         labels[location.getLabelNum(startingX, startingY)].setBorder(border2);
+    }
+
+    private void gravity() {
+        
+        
+    }
+
+    private void checkRow() {
+        for(labels[location.getLabelRight(x, con.ROWS-1)]){
+        
+        }
     }
 }
 

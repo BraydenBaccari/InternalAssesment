@@ -33,7 +33,7 @@ public class Location {
 
     }
 
-    public int getNextLabel(int x, int y) {
+    public int getLabelBelow(int x, int y) {
         int labelNum = 0;
         y++;
         if (y == 0) {
@@ -44,6 +44,30 @@ public class Location {
             return labelNum;
         }
     }
+        public int getLabelLeft(int x, int y) {
+        int labelNum = 0;
+        x--;
+
+        if (y == 0) {
+            return x;
+        } else {
+            labelNum = 30 * y;
+            labelNum += x;
+            return labelNum;
+        }
+        }
+            public int getLabelRight(int x, int y) {
+        int labelNum = 0;
+        x++;
+        if (y == 0) {
+            return x;
+        } else {
+            labelNum = 30 * y;
+            labelNum += x;
+            return labelNum;
+        }
+            }
+        
         /**
          *
          * @param labelNum the label number
