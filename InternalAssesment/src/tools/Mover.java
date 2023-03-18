@@ -9,7 +9,7 @@ package tools;
  * @author b.baccari
  */
 public class Mover {
-
+    Constants con = new Constants();
     Location location = new Location();
 
     public int left(int x, int y) {
@@ -30,6 +30,9 @@ public class Mover {
 
     public int down(int x, int y) {
         if (y == 0) return location.getLabelNum(x, y);
+        else if(y == con.ROWS -2){
+            return location.getLabelNum(x, y);
+        }
         else {
             y++;
             return location.getLabelNum(x, y);
