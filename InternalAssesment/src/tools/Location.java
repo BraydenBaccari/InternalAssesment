@@ -44,20 +44,7 @@ public class Location {
             return labelNum;
         }
     }
-
-    public int getLabelAbove(int x, int y) {
-        int labelNum = 0;
-        y--;
-        if (y == 0) {
-            return x;
-        } else {
-            labelNum = 30 * y;
-            labelNum += x;
-            return labelNum;
-        }
-    }
-
-    public int getLabelLeft(int x, int y) {
+        public int getLabelLeft(int x, int y) {
         int labelNum = 0;
         x--;
 
@@ -68,9 +55,8 @@ public class Location {
             labelNum += x;
             return labelNum;
         }
-    }
-
-    public int getLabelRight(int x, int y) {
+        }
+            public int getLabelRight(int x, int y) {
         int labelNum = 0;
         x++;
         if (y == 0) {
@@ -80,13 +66,13 @@ public class Location {
             labelNum += x;
             return labelNum;
         }
-    }
-
-    /**
-     *
-     * @param labelNum the label number
-     * @return returns the position of the label(int terms of x and y)
-     */
+            }
+        
+        /**
+         *
+         * @param labelNum the label number
+         * @return returns the position of the label(int terms of x and y)
+         */
     public int[] getCoords(int labelNum) {
         int[] coords = new int[2];
         int x = 0;

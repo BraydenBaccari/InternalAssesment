@@ -144,14 +144,12 @@ public class GameScreen extends javax.swing.JFrame {
     }
 
     private void setBoard() {
-        // rows
         for (int i = 18; i < 38; i++) {
             labels[location.getLabelNum(9, i)].setBackground(Color.blue);
             labels[location.getLabelNum(9, i)].setBorder(border);
             labels[location.getLabelNum(19, i)].setBackground(Color.blue);
             labels[location.getLabelNum(19, i)].setBorder(border);
         }
-        // columns
         for (int i = 10; i < 19; i++) {
             labels[location.getLabelNum(i, con.ROWS - 1)].setBackground(Color.blue);
             labels[location.getLabelNum(i, con.ROWS - 1)].setBorder(border);
@@ -192,6 +190,7 @@ public class GameScreen extends javax.swing.JFrame {
             if (location.getLabelNum(startingX, startingY) < location.getLabelNum(18, startingY)) {
                 if (labels[location.getLabelRight(startingX, startingY)].getBackground() != Color.black); else {
                     labels[mover.right(startingX, startingY)].setBackground(Color.red);
+
                     labels[mover.right(startingX, startingY)].setBorder(border);
                     clearTile(startingX, startingY);
 
@@ -220,11 +219,10 @@ public class GameScreen extends javax.swing.JFrame {
     }
 
     private void clearTile(int x, int y) {
-        if (y == 37); else {
+        if (y >= 37); else {
             labels[location.getLabelNum(x, y)].setBackground(Color.black);
             labels[location.getLabelNum(x, y)].setBorder(border2);
         }
-
     }
 
     private void gravity() {
@@ -236,14 +234,16 @@ public class GameScreen extends javax.swing.JFrame {
         for (int i = 10; i < 19; i++) {
             if (labels[location.getLabelNum(i, con.ROWS - 2)].getBackground() != Color.black) {
                 rowcheck++;
-                if (rowcheck == 9) {
-                    for (int j = 10; j < 19; j++) {
-                        clearTile(j, con.ROWS - 2);
-                    }
-                    for (int k = 10; k < 19; k++) {
-                        for (int l = 20; l < 38; l++) {
-                            if (labels[location.getLabelNum(k, l)].getBackground() != Color.black) {
-                                clearTile(k, l);
+            }
+            if (rowcheck == 9) {
+                for (int j = 10; j < 19; j++) {
+                    clearTile(j, con.ROWS - 2);
+                }
+                for (int k = 10; k < 19; k++) {
+                    for (int l = 20; l < 37; l++) {
+                        if (labels[location.getLabelNum(k, l)].getBackground() != Color.black) {
+                            if (labels[mover.down(k, l)].getBackground() == Color.blue); else {     
+                               if (labels[mover.down(k, l)].getBackground() == Color.red) clearTile(k, l);
                                 labels[mover.down(k, l)].setBackground(Color.red);
                                 labels[mover.down(k, l)].setBorder(border);
                             }
@@ -251,10 +251,12 @@ public class GameScreen extends javax.swing.JFrame {
                     }
                 }
             }
-        }
 
+        }
     }
+
 }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
