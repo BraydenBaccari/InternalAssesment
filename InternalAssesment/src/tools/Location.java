@@ -44,6 +44,17 @@ public class Location {
             return labelNum;
         }
     }
+        public int getLabelAbove(int x, int y) {
+        int labelNum = 0;
+        y--;
+        if (y == 0) {
+            return x;
+        } else {
+            labelNum = 30 * y;
+            labelNum += x;
+            return labelNum;
+        }
+    }
         public int getLabelLeft(int x, int y) {
         int labelNum = 0;
         x--;

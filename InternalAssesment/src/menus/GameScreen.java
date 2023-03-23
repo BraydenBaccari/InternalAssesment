@@ -239,22 +239,27 @@ public class GameScreen extends javax.swing.JFrame {
                 for (int j = 10; j < 19; j++) {
                     clearTile(j, con.ROWS - 2);
                 }
-                for (int k = 10; k < 19; k++) {
-                    for (int l = 20; l < 37; l++) {
-                        if (labels[location.getLabelNum(k, l)].getBackground() != Color.black) {
-                            if (labels[mover.down(k, l)].getBackground() == Color.blue); else {     
-                               if (labels[mover.down(k, l)].getBackground() == Color.red) clearTile(k, l);
-                                labels[mover.down(k, l)].setBackground(Color.red);
-                                labels[mover.down(k, l)].setBorder(border);
-                            }
-                        }
-                    }
-                }
+                moveDown(con.ROWS - 2);
             }
-
         }
     }
 
+    private void moveDown(int row) {
+        if (row > 17) {
+            for (int k = 10; k < 19; k++) {
+                if (labels[location.getLabelBelow(k, row)].getBackground() != Color.black
+                        && labels[location.getLabelBelow(k, row)].getBackground() != Color.blue);
+                else if (labels[location.getLabelBelow(k, row)].getBackground() == Color.black
+                        && labels[location.getLabelNum(k, row)].getBackground() == Color.red) {
+                    clearTile(k, row);
+                    labels[mover.down(k, row)].setBackground(Color.red);
+                    labels[mover.down(k, row)].setBorder(border);
+                    moveDown(row--);
+                }
+            }
+        }
+
+    }
 }
 
 
