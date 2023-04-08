@@ -8,6 +8,7 @@ import javax.swing.border.Border;
 import tools.Location;
 import tools.Constants;
 import tools.Mover;
+import tools.Numbers;
 
 /**
  *
@@ -19,6 +20,8 @@ public class GameScreen extends javax.swing.JFrame {
     public JLabel[] labels = new JLabel[con.TOTAL];
     public Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 2);
     public Border border2 = BorderFactory.createLineBorder(Color.BLACK, 2);
+    public Numbers num = new Numbers();
+
     Location location = new Location();
     Mover mover = new Mover();
     public int startingX = 14;
@@ -32,7 +35,6 @@ public class GameScreen extends javax.swing.JFrame {
     public GameScreen() {
         initComponents();
         setFrame();
-        test();
         gridLayout();
         gravity();
 
@@ -120,6 +122,9 @@ public class GameScreen extends javax.swing.JFrame {
 
     }
 
+    /**
+     * makes a grid layout of labelsF
+     */
     private void gridLayout() {
         //makes an amount of labels
         int x = 0;
@@ -143,6 +148,9 @@ public class GameScreen extends javax.swing.JFrame {
 
     }
 
+    /**
+     * sets the board to the default tetris board size
+     */
     private void setBoard() {
         for (int i = 18; i < 38; i++) {
             labels[location.getLabelNum(9, i)].setBackground(Color.blue);
@@ -157,31 +165,28 @@ public class GameScreen extends javax.swing.JFrame {
     }
 
     /**
-     * method to test out features
+     * checks if a key is pressed when key is pressed moves it in that direction
+     *
+     * @param e
      */
-    private void test() {
-        System.out.println(con.ROWS);
-        System.out.println(con.COLUMNS);
-    }
-
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         checkRow();
+        //int pieceType = num.random(1, 1);
+        //setPiece(pieceType);
         if (labels[location.getLabelBelow(startingX, startingY)].getBackground() != Color.black) {
             startingY = 17;
             startingX = 14;
         } else if (keyCode == KeyEvent.VK_DOWN) {
             if (location.getLabelNum(startingX, startingY) < location.getLabelNum(startingX, maxY)) {
-                labels[mover.down(startingX, startingY)].setBackground(Color.red);
-                labels[mover.down(startingX, startingY)].setBorder(border);
+                setTile(location.getLabelBelow(startingX, startingY));
                 clearTile(startingX, startingY);
                 startingY++;
             }
         } else if (keyCode == KeyEvent.VK_LEFT) {
             if (location.getLabelNum(startingX, startingY) > location.getLabelNum(10, startingY)) {
                 if (labels[location.getLabelLeft(startingX, startingY)].getBackground() != Color.black); else {
-                    labels[mover.left(startingX, startingY)].setBackground(Color.red);
-                    labels[mover.left(startingX, startingY)].setBorder(border);
+                    setTile(location.getLabelLeft(startingX, startingY));
                     clearTile(startingX, startingY);
                     startingX--;
                 }
@@ -189,9 +194,7 @@ public class GameScreen extends javax.swing.JFrame {
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             if (location.getLabelNum(startingX, startingY) < location.getLabelNum(18, startingY)) {
                 if (labels[location.getLabelRight(startingX, startingY)].getBackground() != Color.black); else {
-                    labels[mover.right(startingX, startingY)].setBackground(Color.red);
-
-                    labels[mover.right(startingX, startingY)].setBorder(border);
+                    setTile(location.getLabelRight(startingX, startingY));
                     clearTile(startingX, startingY);
 
                     startingX++;
@@ -200,8 +203,7 @@ public class GameScreen extends javax.swing.JFrame {
 
         } else if (keyCode == KeyEvent.VK_SPACE) {
             do {
-                labels[mover.down(startingX, startingY)].setBackground(Color.red);
-                labels[mover.down(startingX, startingY)].setBorder(border);
+                setTile(location.getLabelBelow(startingX, startingY));
                 clearTile(startingX, startingY);
                 startingY++;
             } while (labels[location.getLabelBelow(startingX, startingY)].getBackground() == Color.black);
@@ -210,14 +212,41 @@ public class GameScreen extends javax.swing.JFrame {
 
     }
 
-    private void piece() {
+    /**
+     * checks what piece it is
+     */
+    private void setPiece(int x) {
+        if (x == 1) {
+        setTile(location.getLabelBelow(startingX--, startingY));
+        setTile(location.getLabelNum(startingX, startingY));
+        setTile(location.getLabelRight(startingX, startingY));
+        setTile(location.getLabelBelow(startingX, startingY));
+        } else if (x == 2) {
 
+        } else if (x == 3) {
+
+        } else if (x == 4) {
+
+        } else if (x == 5) {
+
+        } else if (x == 6) {
+
+        } else if (x == 7) {
+
+        }
     }
 
-    private void setTile() {
-
+    private void setTile(int labelNum) {
+        labels[labelNum].setBackground(Color.red);
+        labels[labelNum].setBorder(border);
     }
 
+    /**
+     * clears the tile of choice
+     *
+     * @param x coordinate of the piece
+     * @param y coordinate of the piece
+     */
     private void clearTile(int x, int y) {
         if (y >= 37); else {
             labels[location.getLabelNum(x, y)].setBackground(Color.black);
@@ -229,6 +258,9 @@ public class GameScreen extends javax.swing.JFrame {
 
     }
 
+    /**
+     * checks the row to see if its full
+     */
     private void checkRow() {
         int rowcheck = 0;
         for (int i = 10; i < 19; i++) {
@@ -244,12 +276,16 @@ public class GameScreen extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * moves the piece down
+     *
+     * @param row what row it is on
+     */
     private void moveDown(int row) {
-        if (row > 17) {
+        if (row < 17) {
             for (int k = 10; k < 19; k++) {
                 if (labels[location.getLabelBelow(k, row)].getBackground() != Color.black
-                        && labels[location.getLabelBelow(k, row)].getBackground() != Color.blue);
-                else if (labels[location.getLabelBelow(k, row)].getBackground() == Color.black
+                        && labels[location.getLabelBelow(k, row)].getBackground() != Color.blue); else if (labels[location.getLabelBelow(k, row)].getBackground() == Color.black
                         && labels[location.getLabelNum(k, row)].getBackground() == Color.red) {
                     clearTile(k, row);
                     labels[mover.down(k, row)].setBackground(Color.red);
@@ -259,6 +295,9 @@ public class GameScreen extends javax.swing.JFrame {
             }
         }
 
+    }
+    public void movePieceA(){
+    
     }
 }
 
